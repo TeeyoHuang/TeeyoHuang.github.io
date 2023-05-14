@@ -4,25 +4,6 @@
   
     
     <entry>
-      <title>深度学习导论</title>
-      <link href="/2023/04/30/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%AF%BC%E8%AE%BA/"/>
-      <url>/2023/04/30/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%AF%BC%E8%AE%BA/</url>
-      
-        <content type="html"><![CDATA[<p>深度学习导论</p>]]></content>
-      
-      
-      <categories>
-          
-          <category> 深度学习 </category>
-          
-      </categories>
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>机器学习导论</title>
       <link href="/2023/04/30/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AF%BC%E8%AE%BA/"/>
       <url>/2023/04/30/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AF%BC%E8%AE%BA/</url>
@@ -33,6 +14,25 @@
       <categories>
           
           <category> 机器学习 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>深度学习导论</title>
+      <link href="/2023/04/30/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%AF%BC%E8%AE%BA/"/>
+      <url>/2023/04/30/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%AF%BC%E8%AE%BA/</url>
+      
+        <content type="html"><![CDATA[<p>深度学习导论</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 深度学习 </category>
           
       </categories>
       
