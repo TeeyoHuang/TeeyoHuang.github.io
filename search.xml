@@ -4,9 +4,28 @@
   
     
     <entry>
+      <title>数据结构与算法_Python</title>
+      <link href="/Data-Structure/DS_00_introduction.html"/>
+      <url>/Data-Structure/DS_00_introduction.html</url>
+      
+        <content type="html"><![CDATA[<h1 id="数据结构与算法"><a href="#数据结构与算法" class="headerlink" title="数据结构与算法"></a>数据结构与算法</h1><p>本系列文章以Python语言为基础，简要介绍基本的数据结构与算法的相关知识。<br>并配合 <a href="https://leetcode.cn/">LeetCode</a> 网站的一些题目来加深相关概念的了解。<br><b><font color="red">注意！由于版权原因，本系列文章在引用LeetCode的题目时，只提供官方页面的跳转链接，而不会直接展示题目信息。</font></b></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 数据结构与算法 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>机器学习导论</title>
-      <link href="/2023/04/30/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AF%BC%E8%AE%BA/"/>
-      <url>/2023/04/30/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AF%BC%E8%AE%BA/</url>
+      <link href="/Machine-Learning/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AF%BC%E8%AE%BA.html"/>
+      <url>/Machine-Learning/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AF%BC%E8%AE%BA.html</url>
       
         <content type="html"><![CDATA[<p>机器学习导论</p>]]></content>
       
@@ -23,30 +42,9 @@
     
     
     <entry>
-      <title>图像分割测试用例</title>
-      <link href="/2023/04/30/%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B/"/>
-      <url>/2023/04/30/%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B/</url>
-      
-        <content type="html"><![CDATA[<p>图像分割测试用例</p>]]></content>
-      
-      
-      <categories>
-          
-          <category> 计算机视觉 </category>
-          
-          <category> 深度学习下的图像分割 </category>
-          
-      </categories>
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>深度学习导论</title>
-      <link href="/2023/04/30/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%AF%BC%E8%AE%BA/"/>
-      <url>/2023/04/30/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%AF%BC%E8%AE%BA/</url>
+      <link href="/Deep-Learning/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%AF%BC%E8%AE%BA.html"/>
+      <url>/Deep-Learning/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%AF%BC%E8%AE%BA.html</url>
       
         <content type="html"><![CDATA[<p>深度学习导论</p>]]></content>
       
@@ -63,16 +61,18 @@
     
     
     <entry>
-      <title>数据结构与算法_Python</title>
-      <link href="/2023/04/29/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95_Python/"/>
-      <url>/2023/04/29/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95_Python/</url>
+      <title>图像分割测试用例</title>
+      <link href="/Computer-Vision/Image-Segmentation-By-Deeplearning/%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B.html"/>
+      <url>/Computer-Vision/Image-Segmentation-By-Deeplearning/%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B.html</url>
       
-        <content type="html"><![CDATA[<p>数据结构与算法_Python</p>]]></content>
+        <content type="html"><![CDATA[<p>图像分割测试用例</p>]]></content>
       
       
       <categories>
           
-          <category> 数据结构与算法 </category>
+          <category> 计算机视觉 </category>
+          
+          <category> 深度学习下的图像分割 </category>
           
       </categories>
       
