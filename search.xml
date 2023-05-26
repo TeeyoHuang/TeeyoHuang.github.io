@@ -99,27 +99,6 @@
     
     
     <entry>
-      <title>图像分割测试用例</title>
-      <link href="/Computer-Vision/Image-Segmentation-By-Deeplearning/%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B.html"/>
-      <url>/Computer-Vision/Image-Segmentation-By-Deeplearning/%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B.html</url>
-      
-        <content type="html"><![CDATA[<p>图像分割测试用例</p>]]></content>
-      
-      
-      <categories>
-          
-          <category> 计算机视觉 </category>
-          
-          <category> 深度学习下的图像分割 </category>
-          
-      </categories>
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>深度学习导论</title>
       <link href="/Deep-Learning/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%AF%BC%E8%AE%BA.html"/>
       <url>/Deep-Learning/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%AF%BC%E8%AE%BA.html</url>
@@ -149,6 +128,27 @@
       <categories>
           
           <category> 机器学习 </category>
+          
+      </categories>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>图像分割测试用例</title>
+      <link href="/Computer-Vision/Image-Segmentation-By-Deeplearning/%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B.html"/>
+      <url>/Computer-Vision/Image-Segmentation-By-Deeplearning/%E5%9B%BE%E5%83%8F%E5%88%86%E5%89%B2%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B.html</url>
+      
+        <content type="html"><![CDATA[<p>图像分割测试用例</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 计算机视觉 </category>
+          
+          <category> 深度学习下的图像分割 </category>
           
       </categories>
       
