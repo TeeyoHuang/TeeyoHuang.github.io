@@ -1,0 +1,412 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>1 权重初始化 | 朝花夕拾</title><meta name="author" content="TeeyoHuang"><meta name="copyright" content="TeeyoHuang"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="权重初始化">
+<meta property="og:type" content="article">
+<meta property="og:title" content="1 权重初始化">
+<meta property="og:url" content="https://teeyohuang.github.io/Deep-Learning/DL_01_weight_init.html">
+<meta property="og:site_name" content="朝花夕拾">
+<meta property="og:description" content="权重初始化">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.staticaly.com/gh/teeyohuang/pic_bed@main/Deep_Learning/1_0.webp">
+<meta property="article:published_time" content="2023-04-30T16:01:00.000Z">
+<meta property="article:modified_time" content="2023-06-09T13:45:26.611Z">
+<meta property="article:author" content="TeeyoHuang">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.staticaly.com/gh/teeyohuang/pic_bed@main/Deep_Learning/1_0.webp"><link rel="shortcut icon" href="/img/favicon_T.png"><link rel="canonical" href="https://teeyohuang.github.io/Deep-Learning/DL_01_weight_init.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":40,"languages":{"author":"作者: TeeyoHuang","link":"链接: ","source":"来源: 朝花夕拾","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'mediumZoom',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '1 权重初始化',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-06-09 21:45:26'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const now = new Date()
+          const hour = now.getHours()
+          const isNight = hour <= 7 || hour >= 22
+          if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+          else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/custom.css"><link rel="stylesheet" href="/css/universe.css"><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-double-row-display@1.00/cardlistpost.min.css"/>
+<style>#recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap > .tags:before {content:"\A";
+  white-space: pre;}#recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap > .tags > .article-meta__separator{display:none}</style>
+<link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiperstyle.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="/css/runtime.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='screen'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/teeyo_comic.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">15</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于作者</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.staticaly.com/gh/teeyohuang/pic_bed@main/Deep_Learning/1_0.webp')"><nav id="nav"><span id="blog-info"><a href="/" title="朝花夕拾"><span class="site-name">朝花夕拾</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于作者</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">1 权重初始化</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-04-30T16:01:00.000Z" title="发表于 2023-05-01 00:01:00">2023-05-01</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-06-09T13:45:26.611Z" title="更新于 2023-06-09 21:45:26">2023-06-09</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Deep-Learning/">深度学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.8k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>6分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="1 权重初始化"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><img src="https://cdn.staticaly.com/gh/teeyohuang/pic_bed@main/img/csdn_head_webp.webp" width="70%">  
+  
+<hr style="border:solid; height:1px; color=#000000 size=1"> 
+
+
+<p><a href="https://teeyohuang.github.io/Deep-Learning/DL_00_introduction.html">深度学习系列博文目录一览</a><br>———————————————— </p>
+<h1 id="1-权重初始化"><a href="#1-权重初始化" class="headerlink" title="1 权重初始化"></a>1 权重初始化</h1><hr style="border:solid; height:1px; color=#000000 size=1">  
+
+<h2 id="1-1-为什么需要权重初始化"><a href="#1-1-为什么需要权重初始化" class="headerlink" title="1.1 为什么需要权重初始化"></a>1.1 为什么需要权重初始化</h2><ul>
+<li><p>① 为了使神经网络在<b>合理的时间内收敛</b>.</p>
+</li>
+<li><p>② 为了尽量避免在深度神经网络的正向（前向）传播过程中层激活函数的<b>输出梯度出现爆炸或消失</b>。</p>
+</li>
+</ul>
+<h2 id="1-2-如何进行初始化"><a href="#1-2-如何进行初始化" class="headerlink" title="1.2 如何进行初始化"></a>1.2 如何进行初始化</h2><p>① <b>如果将每个隐藏单元的参数都初始化为0.</b></p>
+<p>那么在正向传播时每个隐藏单元将<b>对于相同的输入会计算出相同的值</b>，并传递至输出层。在<b>反向传播中，每个隐藏单元的参数梯度值相等</b>。因此，这些参数在使用基于梯度的优化算法迭代后值依然相等。这样所有隐层的单元都是对称的了，很难学到什么有效的信息，之后的迭代也是如此。</p>
+<p><b><font color="red">所以权重初始化不能将权重参数全部初始化为0，应打破这种对称性。</font></b></p>
+<p>② <b>如果将参数都初始化为0周围极小的值</b></p>
+<p><b>也不好</b>，比如 如果用 sigmoid 做激活函数，它在0周围是近似线性的，如果我们的参数都初始化为0附近，那么可能数据经过神经元之后，输出值也在0附近，这样<b>大部分都落在激活函数线性区，那么激活函数引入非线性的作用将被削减。</b></p>
+<p>③ <b>如果参数都初始化为较大的值，很显然容易使得输出落入饱和区。</b></p>
+<p><b><font color="red">所以合理的初始化时比较重要的，一般采用随机的初始化。</font></b></p>
+<h2 id="1-3-常见的几种初始化方式"><a href="#1-3-常见的几种初始化方式" class="headerlink" title="1.3 常见的几种初始化方式"></a>1.3 常见的几种初始化方式</h2><p>① <b>均匀分布初始化：</b><br>将参数初始化为 <b><font color="red">均匀分布U(a,b) </font></b>上的随机值，pytorch的实现方案：  </p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">torch.nn.init.uniform_(tensor, a=<span class="number">0</span>, b=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+
+<p>② <b>高斯初始化：</b><br>将参数初始化为 <b><font color="red">高斯分布N(0,1)</font></b> 上的随机值，pytorch的实现方案：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">torch.nn.init.normal_(tensor, mean=<span class="number">0</span>, std=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+
+<p>③ <b>常数初始化：</b><br>将参数初始化为一个 <b><font color="red">固定的常数val</font></b>, pytorch实现方案为：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">torch.nn.init.constant_(tensor, val)</span><br></pre></td></tr></table></figure>
+
+<p>上面三种初始化方法其实并不是十分理想的初始化方案，因为如果网络层数过深的话，依然会导致 <b>梯度爆炸</b> 或者 <b>梯度弥散</b>的 情况出现，<br>一般在使用中，可能就是神经网络中的某一两层可能会用到上述初始化方案，比如自己写的某几层,并不建议对所有的参数都使用上述初始化方案。<b>对于一些较为普及的模型，比如VGG、ResNet等，往往会加载官方提供的预训练模型的参数值，对大网络进行参数初始化</b>。 </p>
+<h2 id="1-4-Xavier-初始化方案"><a href="#1-4-Xavier-初始化方案" class="headerlink" title="1.4 Xavier 初始化方案"></a>1.4 Xavier 初始化方案</h2><p>Xavier 初始化的基本思想是，若<b><font color="red">对于一层网络的输入和输出的方差尽量不变</font>，这样就可以避免输出趋向于0，从而避免梯度弥散情况。</b>   </p>
+<p>参考资料：<br><a target="_blank" rel="noopener" href="https://prateekvjoshi.com/2016/03/29/understanding-xavier-initialization-in-deep-neural-networks/">链接1</a><br><a target="_blank" rel="noopener" href="http://proceedings.mlr.press/v9/glorot10a/glorot10a.pdf">链接2</a><br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/40175178">链接3</a>  </p>
+<p>对于 $y&#x3D;wx$ , 根据假设有：<br>$$ Var(Y) &#x3D; Var(w_iX) &#x3D; Var(w_i)*Var(X) + E^2(X)Var(w_i) + E^2(w_i)Var(X); $$<br>当 $X, w_i$ 都符合均值为 0 的正态分布时，其期望 $E(X), E(w_i)$ 均为0, 则上式可以简化为:<br>$$Var(Y) &#x3D; Var(w_i)*Var(X)$$</p>
+<p>若该层共有$n_i$个神经元，则有：<br>$$ Var(Y) &#x3D; n_i * Vaar(w_i) * Var(X) $$  </p>
+<p>要使得$Var(Y) &#x3D; Var(X)$， 则需要 $n_i * Var(W_i) &#x3D; 1$, 则 $ Var(w_i) &#x3D; 1&#x2F;n_i$;</p>
+<p>同理，当反向传播时, $Var(w_i) &#x3D; 1&#x2F;n_{i+1}$  </p>
+<p>因此，综合正向和反向传播考虑，最终取 $Var(w_i) &#x3D; 1 &#x2F; \frac{(n_i+n_{i+1})}{2} &#x3D; 2&#x2F;(n_i+n_{i+1})$ </p>
+<p>如果使用<b><font color="red">均匀分布U(a,b) </font></b>为基础进行初始化，则：<br>$$\begin{aligned}<br>E &amp;&#x3D; (a+b)&#x2F;2 &#x3D; 0  \\<br>Var &amp;&#x3D; (b-a)^2&#x2F;12 &#x3D; 2&#x2F;(n_i+n_{i+1})<br>\end{aligned}<br>$$<br>解得： $ a&#x3D; -b &#x3D; -\sqrt{6&#x2F;(n_i+n_{i+1})} $  </p>
+<p>即$w_i$ 初始化为 $ U(-\sqrt{\frac{6}{(n_i+n_{i+1})}}, \sqrt{\frac{6}{(n_i+n_{i+1})}}) $  </p>
+<p><b>pytorch的实现方案①, 以均匀分布为基础</b>：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">torch.nn.init.xavier_uniform_(tensor, gain=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+
+<p>将参数初始化为均匀分布 $U(-\alpha, \alpha) $上的随机值，其中 $\alpha$ 取值为：$ \alpha &#x3D; gain * \sqrt{\frac{6}{(fan_{in} + fan_{out})}}$  </p>
+<ul>
+<li>fan_in 指输入端神经元的个数， fan_out 指输出端神经元的个数，pytorch它会自己根据网络计算。</li>
+<li>gain 是一个增益， 默认为1；</li>
+</ul>
+<p><b>pytorch的实现方案②, 以高斯分布为基础</b>：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">torch.nn.init.xavier_normal_(tensor, gain=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+
+<p>将参数初始化为高斯分布 $N(0, std^2)$上的随机值，而 std 的取值是：$std &#x3D; gain * \sqrt{\frac{2}{(fan_{in} + fan_{out})}}$ </p>
+<h2 id="1-5-Kaiming初始化"><a href="#1-5-Kaiming初始化" class="headerlink" title="1.5 Kaiming初始化"></a>1.5 Kaiming初始化</h2><p>Kaiming初始化基本思想是，当使用<code>ReLU</code>做为激活函数时，<code>Xavier</code>的效果不好。<br>原因在于：<b>当ReLU的输入小于0时，其输出为0，影响了输出的分布模式。也就是激活函数输出均值不为0，我们上面的推导中是有假设E(X)&#x3D;0的。</b>  </p>
+<p>因此Kaiming He初始化，在Xavier的基础上，<b>假设每层网络有一半的神经元被关闭，于是其分布的方差也会变小。所以提出一个新的假设，那就是前向传播中，如果采用Xiaver，方差会缩小为原来一半</b>。那么为了修正这个缩减，就使得参数初始化的范围比原来扩大一倍。  </p>
+<p><b>pytorch的实现方案①, 以均匀分布为基础</b>：  </p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">torch.nn.init.kaiming_uniform_(tensor, a=<span class="number">0</span>, mode=<span class="string">&#x27;fan_in&#x27;</span>, nonlinearity=<span class="string">&#x27;leaky_relu&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>将参数初始化为均匀分布 $U(-bound, bound)$上的随机值，其中 bound 取值为</p>
+<p> $bound &#x3D; \sqrt{\frac{6}{(1+\alpha^2)*fan_{in} }}$</p>
+<ul>
+<li>$\alpha$ : 该层后面一层的激活函数中负的斜率 (0 for ReLU by default)</li>
+<li>使用 mode &#x3D; fan_in 保持 weights 的方差在<b>前向传播</b>中不变；</li>
+<li>使用 mode &#x3D; fan_out 保持weights 的方差在<b>反向传播</b>中不变。</li>
+</ul>
+<p><b>pytorch的实现方案②, 以高斯分布为基础</b>：  </p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">torch.nn.init.kaiming_normal_(tensor, a=<span class="number">0</span>, mode=<span class="string">&#x27;fan_in&#x27;</span>, nonlinearity=<span class="string">&#x27;leaky_relu&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>将参数初始化为高斯分布 $N(0, std^2)$上的随机值，而std的取值是：$std &#x3D; \sqrt{\frac{2}{(1+\alpha^2)*fan_{in} }}$  </p>
+<h2 id="1-6-pytorch常见的-权重初始化-操作方法"><a href="#1-6-pytorch常见的-权重初始化-操作方法" class="headerlink" title="1.6 pytorch常见的 权重初始化 操作方法"></a>1.6 pytorch常见的 权重初始化 操作方法</h2><ul>
+<li>方案一：直接对某层的data进行赋值</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">self.conv1.weight.data.normal_(<span class="number">0</span>, <span class="number">0.01</span>)</span><br><span class="line">self.conv1.bias.data.zero_()</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>方案二：调用nn初始化模块：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">torch.nn.init.normal_(self.conv1.weight, std=<span class="number">0.01</span>)</span><br><span class="line">torch.nn.init.constant_(self.conv1.bias, <span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+
+<p>可搭配for循环使用：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> layer <span class="keyword">in</span> self.children():</span><br><span class="line">    torch.nn.init.normal_(layer.weight, std=<span class="number">0.01</span>)</span><br><span class="line">    torch.nn.init.constant_(layer.bias, <span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>方案三： 定义一个自己的小函数</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">_weight_init</span>(<span class="params">m</span>):</span><br><span class="line">    classname = m.__class__.__name__</span><br><span class="line">    <span class="keyword">if</span> classname.find(<span class="string">&#x27;Conv&#x27;</span>) != -<span class="number">1</span>:</span><br><span class="line">        torch.nn.init.xavier_(m.weight)</span><br><span class="line">        torch.nn.init.xavier_(m.bias)</span><br><span class="line">    <span class="keyword">if</span> classname.find(<span class="string">&#x27;Linear&#x27;</span>) != -<span class="number">1</span>:</span><br><span class="line">        torch.nn.init.normal_(m.weight, std=<span class="number">0.01</span>)</span><br><span class="line">        torch.nn.init.constant_(m.bias, <span class="number">0</span>)</span><br><span class="line"> </span><br><span class="line"><span class="comment">#或者不读取下划线，直接看是不是某个类,这种方法相对来说更安全一些</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">_weights_init</span>(<span class="params">m</span>):</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">isinstance</span>(m, torch.nn.Conv2d):</span><br><span class="line">        torch.nn.xavier_(m.weight)</span><br><span class="line">        torch.nn.xavier_(m.bias)</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">isinstance</span>(m, torch.nn.Linear):</span><br><span class="line">        torch.nn.init.normal_(m.weight, std=<span class="number">0.01</span>)</span><br><span class="line">        torch.nn.init.constant_(m.bias, <span class="number">0</span>)</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 然后对某个Net应用：</span></span><br><span class="line">Net.apply(_weight_init)</span><br></pre></td></tr></table></figure>
+
+<p><b><font color="red">以上三个均为示例，具体使用情况请依据自己的网络和具体的代码，请勿生搬硬套。</font></b><br>.</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://Teeyohuang.github.io">TeeyoHuang</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://teeyohuang.github.io/Deep-Learning/DL_01_weight_init.html">https://teeyohuang.github.io/Deep-Learning/DL_01_weight_init.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://Teeyohuang.github.io" target="_blank">朝花夕拾</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://cdn.staticaly.com/gh/teeyohuang/pic_bed@main/Deep_Learning/1_0.webp" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/Deep-Learning/DL_00_introduction.html" title="深度学习导论"><img class="cover" src="https://cdn.staticaly.com/gh/teeyohuang/pic_bed@main/Deep_Learning/DL.webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">深度学习导论</div></div></a></div><div class="next-post pull-right"><a href="/Deep-Learning/DL_02_convolution_and_pool_layer.html" title="2 卷积与池化"><img class="cover" src="https://cdn.staticaly.com/gh/teeyohuang/pic_bed@main/Deep_Learning/2_0.webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">2 卷积与池化</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/teeyo_comic.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">TeeyoHuang</div><div class="author-info__description">『Stay Hungry. Stay Foolish.』</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">15</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/teeyohuang" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="/teeyohuang@163.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog, just for recording and sharing.</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-%E6%9D%83%E9%87%8D%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-text">1 权重初始化</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%E6%9D%83%E9%87%8D%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-text">1.1 为什么需要权重初始化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-%E5%A6%82%E4%BD%95%E8%BF%9B%E8%A1%8C%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-text">1.2 如何进行初始化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-3-%E5%B8%B8%E8%A7%81%E7%9A%84%E5%87%A0%E7%A7%8D%E5%88%9D%E5%A7%8B%E5%8C%96%E6%96%B9%E5%BC%8F"><span class="toc-text">1.3 常见的几种初始化方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-4-Xavier-%E5%88%9D%E5%A7%8B%E5%8C%96%E6%96%B9%E6%A1%88"><span class="toc-text">1.4 Xavier 初始化方案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-5-Kaiming%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-text">1.5 Kaiming初始化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-6-pytorch%E5%B8%B8%E8%A7%81%E7%9A%84-%E6%9D%83%E9%87%8D%E5%88%9D%E5%A7%8B%E5%8C%96-%E6%93%8D%E4%BD%9C%E6%96%B9%E6%B3%95"><span class="toc-text">1.6 pytorch常见的 权重初始化 操作方法</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/Deep-Learning/DL_05_dropout.html" title="5 随机失活"><img src="https://cdn.staticaly.com/gh/teeyohuang/pic_bed@main/Deep_Learning/5_0.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="5 随机失活"/></a><div class="content"><a class="title" href="/Deep-Learning/DL_05_dropout.html" title="5 随机失活">5 随机失活</a><time datetime="2023-04-30T16:04:00.000Z" title="发表于 2023-05-01 00:04:00">2023-05-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/Deep-Learning/DL_04_activation_func.html" title="4 激活函数"><img src="https://cdn.staticaly.com/gh/teeyohuang/pic_bed@main/Deep_Learning/4_0.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="4 激活函数"/></a><div class="content"><a class="title" href="/Deep-Learning/DL_04_activation_func.html" title="4 激活函数">4 激活函数</a><time datetime="2023-04-30T16:04:00.000Z" title="发表于 2023-05-01 00:04:00">2023-05-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/Deep-Learning/DL_02_convolution_and_pool_layer.html" title="2 卷积与池化"><img src="https://cdn.staticaly.com/gh/teeyohuang/pic_bed@main/Deep_Learning/2_0.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="2 卷积与池化"/></a><div class="content"><a class="title" href="/Deep-Learning/DL_02_convolution_and_pool_layer.html" title="2 卷积与池化">2 卷积与池化</a><time datetime="2023-04-30T16:03:00.000Z" title="发表于 2023-05-01 00:03:00">2023-05-01</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2023 By TeeyoHuang</div><div class="footer_custom_text">Hi, welcome to my <a target="_blank" rel="noopener" href="https://butterfly.js.org/">blog</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        insertScript: [200, () => {
+          document.querySelectorAll('mjx-container').forEach(node => {
+            if (node.hasAttribute('display')) {
+              btf.wrap(node, 'div', { class: 'mathjax-overflow' })
+            } else {
+              btf.wrap(node, 'span', { class: 'mathjax-overflow' })
+            }
+          });
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'HgAn8i4mE43FcGFWsenlAi1P-gzGzoHsz',
+      appKey: 'KUQAsQXyj2wWidCEzHg4ds1i',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !true) {
+  if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><canvas id="universe"></canvas><script defer src="/js/universe.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div><!-- hexo injector body_end start --> <script data-pjax>if(document.getElementById('recent-posts') && (location.pathname ==='/'|| '/' ==='all')){
+    var parent = document.getElementById('recent-posts');
+    var child = '<div class="recent-post-item" style="width:100%;height: auto"><div id="catalog_magnet"><div class="magnet_item"><a class="magnet_link" href="https://Teeyohuang.github.io/categories/Data-Structure/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🎮 数据结构与算法 (8)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://Teeyohuang.github.io/categories/Machine-Learning/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">📚 机器学习 (1)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://Teeyohuang.github.io/categories/Deep-Learning/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">👩‍💻 深度学习 (5)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://Teeyohuang.github.io/categories/Computer-Vision/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">📒 计算机视觉 (1)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://Teeyohuang.github.io/categories/Computer-Vision/Image-Segmentation-By-Deeplearning/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">💡 深度学习下的图像分割 (1)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item" style="visibility: hidden"></div><a class="magnet_link_more"  href="https://Teeyohuang.github.io/categories" style="flex:1;text-align: center;margin-bottom: 10px;">查看更多...</a></div></div>';
+    console.log('已挂载magnet')
+    parent.insertAdjacentHTML("afterbegin",child)}
+     </script><style>#catalog_magnet{flex-wrap: wrap;display: flex;width:100%;justify-content:space-between;padding: 10px 10px 0 10px;align-content: flex-start;}.magnet_item{flex-basis: calc(33.333333333333336% - 5px);background: #f2f2f2;margin-bottom: 10px;border-radius: 8px;transition: all 0.2s ease-in-out;}.magnet_item:hover{background: #cad6d9}.magnet_link_more{color:#555}.magnet_link{color:black}.magnet_link:hover{color:white}@media screen and (max-width: 600px) {.magnet_item {flex-basis: 100%;}}.magnet_link_context{display:flex;padding: 10px;font-size:16px;transition: all 0.2s ease-in-out;}.magnet_link_context:hover{padding: 10px 20px;}</style>
+    <style></style><script data-pjax>
+  function butterfly_swiper_injector_config(){
+    var parent_div_git = document.getElementById('recent-posts');
+    var item_html = '<div class="recent-post-item" style="height: auto;width: 100%"><div class="blog-slider swiper-container-fade swiper-container-horizontal" id="swiper_container"><div class="blog-slider__wrp swiper-wrapper" style="transition-duration: 0ms;"><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="Deep-Learning/DL_00_introduction.html" alt=""><img width="48" height="48" src="https://cdn.staticaly.com/gh/teeyohuang/pic_bed@main/Deep_Learning/DL.webp" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2023-05-01</span><a class="blog-slider__title" href="Deep-Learning/DL_00_introduction.html" alt="">深度学习导论</a><div class="blog-slider__text">深度学习 系列专栏简要说明</div><a class="blog-slider__button" href="Deep-Learning/DL_00_introduction.html" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="Data-Structure/DS_00_introduction.html" alt=""><img width="48" height="48" src="https://cdn.staticaly.com/gh/teeyohuang/pic_bed@main/Data_Structure/Data_Structure_and_Algorithm_webp.webp" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2023-04-29</span><a class="blog-slider__title" href="Data-Structure/DS_00_introduction.html" alt="">数据结构与算法_Python</a><div class="blog-slider__text">数据结构与算法_Python 系列专栏简要说明</div><a class="blog-slider__button" href="Data-Structure/DS_00_introduction.html" alt="">详情   </a></div></div></div><div class="blog-slider__pagination swiper-pagination-clickable swiper-pagination-bullets"></div></div></div>';
+    console.log('已挂载butterfly_swiper')
+    parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+    }
+  var elist = 'undefined'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_swiper_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_swiper_injector_config();
+  }
+  </script><script defer src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.js"></script><script defer data-pjax src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper_init.js"></script><script data-pjax>
+  function butterfly_footer_beautify_injector_config(){
+    var parent_div_git = document.getElementById('footer-wrap');
+    var item_html = '<div id="workboard"></div><p id="ghbdages"><a class="github-badge" target="_blank" href="https://hexo.io/" style="margin-inline:5px" data-title="博客框架为Hexo" title=""><img src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&amp;logo=hexo" alt=""/></a><a class="github-badge" target="_blank" href="https://butterfly.js.org/" style="margin-inline:5px" data-title="主题版本Butterfly" title=""><img src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&amp;logo=bitdefender" alt=""/></a><a class="github-badge" target="_blank" href="https://github.com/" style="margin-inline:5px" data-title="本站项目由Github托管" title=""><img src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&amp;logo=GitHub" alt=""/></a><a class="github-badge" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" style="margin-inline:5px" data-title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可" title=""><img src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&amp;logo=Claris" alt=""/></a></p>';
+    console.log('已挂载butterfly_footer_beautify')
+    parent_div_git.insertAdjacentHTML("beforeend",item_html)
+    }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_footer_beautify_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_footer_beautify_injector_config();
+  }
+  </script><script async src="/js/runtime.js"></script><div class="js-pjax"><script async="async">var arr = document.getElementsByClassName('recent-post-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '2s');
+    arr[i].setAttribute('data-wow-delay', '1s');
+    arr[i].setAttribute('data-wow-offset', '100');
+    arr[i].setAttribute('data-wow-iteration', '2');
+  }</script><script async="async">var arr = document.getElementsByClassName('card-widget');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('pagination');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script></div><script defer src="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/wow.min.js"></script><script defer src="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/wow_init.js"></script><!-- hexo injector body_end end --></body></html>
