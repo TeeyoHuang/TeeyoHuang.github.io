@@ -1,0 +1,419 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>7-pandas数据分组聚合合并 | 朝花夕拾</title><meta name="author" content="TeeyoHuang"><meta name="copyright" content="TeeyoHuang"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="pandas数据进阶操作, 如条件查询、统计查询等">
+<meta property="og:type" content="article">
+<meta property="og:title" content="7-pandas数据分组聚合合并">
+<meta property="og:url" content="https://teeyohuang.github.io/Pandas-Base/PD_07_Pandas_Senior_Data_Operations.html">
+<meta property="og:site_name" content="朝花夕拾">
+<meta property="og:description" content="pandas数据进阶操作, 如条件查询、统计查询等">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://teeyohuang.github.io/pic_bed/Pandas_Base/7_0.png">
+<meta property="article:published_time" content="2023-10-31T16:06:00.000Z">
+<meta property="article:modified_time" content="2024-01-02T07:16:44.573Z">
+<meta property="article:author" content="TeeyoHuang">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://teeyohuang.github.io/pic_bed/Pandas_Base/7_0.png"><link rel="shortcut icon" href="/img/favicon_T.png"><link rel="canonical" href="https://teeyohuang.github.io/Pandas-Base/PD_07_Pandas_Senior_Data_Operations.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":40,"languages":{"author":"作者: TeeyoHuang","link":"链接: ","source":"来源: 朝花夕拾","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'mediumZoom',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '7-pandas数据分组聚合合并',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-01-02 15:16:44'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const now = new Date()
+          const hour = now.getHours()
+          const isNight = hour <= 7 || hour >= 22
+          if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+          else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/custom.css"><link rel="stylesheet" href="/css/universe.css"><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<link rel="stylesheet" href="/css/runtime.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiperstyle.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='screen'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-double-row-display@1.00/cardlistpost.min.css"/>
+<style>#recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap > .tags:before {content:"\A";
+  white-space: pre;}#recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap > .tags > .article-meta__separator{display:none}</style>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/teeyo_comic.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">31</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于作者</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://teeyohuang.github.io/pic_bed/Pandas_Base/7_0.png')"><nav id="nav"><span id="blog-info"><a href="/" title="朝花夕拾"><span class="site-name">朝花夕拾</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于作者</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">7-pandas数据分组聚合合并</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-10-31T16:06:00.000Z" title="发表于 2023-11-01 00:06:00">2023-11-01</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-01-02T07:16:44.573Z" title="更新于 2024-01-02 15:16:44">2024-01-02</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Pandas-Base/">Pandas基础入门</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2.5k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>9分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="7-pandas数据分组聚合合并"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><!-- <img src="https://cdn.staticaly.com/gh/teeyohuang/pic_bed@main/img/csdn_head_webp.webp" width=70%>   -->
+<p><img src="https://teeyohuang.github.io/pic_bed/img/csdn_head_webp.webp" width="70%"></p>
+<hr style="border:solid; height:1px; color=#000000 size=1">  
+
+<h1 id="7-pandas数据分组聚合合并"><a href="#7-pandas数据分组聚合合并" class="headerlink" title="7.pandas数据分组聚合合并"></a>7.pandas数据分组聚合合并</h1><hr style="border:solid; height:1px; color=#000000 size=1">  
+
+<p>Pandas 处理数据时，常常会对数据分成若干个组，然后对各个组进行数据处理，比如求和、求平均值等，最后再将各个组的数据汇总起来形成一个新的数据集，这个过程通常被描述为“split-apply-combine” 。 </p>
+<p>所以本篇要讲的就是 Pandas 中涉及 分组、聚合、合并的一些操作。  </p>
+<p>在本章中依然使用 wine dataset 数据集：  </p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="comment">#  nrows=6 表示仅仅读取前10行, 并且只使用 usecols 来限定只取部分列数据</span></span><br><span class="line">df = pd.read_csv(<span class="string">&#x27;./datasets/wine&#x27;</span>, nrows=<span class="number">10</span>, usecols=[<span class="string">&#x27;citric acid&#x27;</span>, <span class="string">&#x27;chlorides&#x27;</span>, <span class="string">&#x27;density&#x27;</span>, <span class="string">&#x27;pH&#x27;</span>, <span class="string">&#x27;sulphates&#x27;</span> , <span class="string">&#x27;alcohol&#x27;</span>, <span class="string">&#x27;quality&#x27;</span>])</span><br><span class="line"><span class="comment"># 使用 rename 来修改一下 行索引和列索引, 使其更精简</span></span><br><span class="line">df.rename(<span class="built_in">dict</span>([(i, <span class="string">f&#x27;第<span class="subst">&#123;i&#125;</span>行&#x27;</span>) <span class="keyword">for</span> i <span class="keyword">in</span> df.index]), inplace=<span class="literal">True</span>)</span><br><span class="line">df.rename(<span class="built_in">dict</span>([(col, col[:<span class="number">4</span>]) <span class="keyword">for</span> col <span class="keyword">in</span> df.columns]), axis=<span class="number">1</span>, inplace=<span class="literal">True</span>)</span><br><span class="line">df</span><br></pre></td></tr></table></figure>
+<h2 id="7-1-分组"><a href="#7-1-分组" class="headerlink" title="7.1 分组"></a>7.1 分组</h2><h3 id="7-1-1-groupby-方法"><a href="#7-1-1-groupby-方法" class="headerlink" title="7.1.1 groupby 方法"></a>7.1.1 groupby 方法</h3><p>官方文档：<a target="_blank" rel="noopener" href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.groupby.html">groupby</a>  </p>
+<p><code>groupby</code> 函数是 Pandas 中分组的最核心函数，其基本参数如下：  </p>
+<ul>
+<li><code>by</code>: 该参数用于确定 <code>groupby</code> 操作的分组依据，以是一个映射（mapping）、函数（function）、标签（label）、pd.Grouper对象或这样的对象的列表。<br><ul>
+<li>如果<code>by</code>是一个函数，那么这个函数会被应用到对象索引的每一个值上，依据函数的返回值进行分组；</li>
+<li>如果<code>by</code>是 dict 或 Series，则将使用dict 或 Series 的值来确定分组；</li>
+<li>…</li>
+</ul>
+</li>
+<li><code>axis</code>: 该参数用于确定 对数据沿着什么方向分组，默认为 0，即按行分组，为1时按列分组；<i>该参数在未来新版本中可能会舍弃, 改为只对行数据进行分组，如果要对列数据进行分组，可以先将DataFrame进行转置；</i>  </li>
+<li><code>level</code>: 该参数是DataFrame具备多层索引时才会用到，用于确定对多层索引的哪一层进行分组，默认为 None，即对所有层进行分组；也可以使用整数或索引名，或者由他们组成的元组序列；  </li>
+<li><code>as_index</code>: 该参数用于确定分组后，是否将分组的字段作为结果中的索引，默认为 True；<ul>
+<li>当 <code>as_index=True</code> ，groupby 操作后的返回结果会以分组标签作为索引，也就是说结果 DataFrame 的索引会是每个组的标签。这是最常见的使用方式。  </li>
+<li>当 <code>as_index=False</code> ，groupby 操作后的返回结果会以原来的 DataFrame 的结构返回，也就是说结果 DataFrame 的索引和原 DataFrame 一样，而分组标签则成为新的列（或行）数据。  </li>
+</ul>
+</li>
+<li><code>sort</code>: 该参数用于确定分组后，是否对分组结果按照分组的键（依据）进行排序，默认为 True；但是不会影响分组内部数据的顺序。 如果将该参数设置为 False，一般会执行的快一点，特别是对于数据量很大的DataFrame；  </li>
+<li><code>group_keys</code>: 当<B>调用apply</B>并且by参数产生类似索引(即转换)结果时，向索引添加组键，以使得结果更具有可读性；</li>
+<li><code>observed</code>: 该参数决定了对于分类组器（Categorical groupers）的处理方式，用于确定是否显示观察到的值，默认为 False，即显示观察到的值；当该参数设置为 True 时，会显示未观察到的值；<i>不过该参数在2.1.0版本后被弃用</i>；</li>
+<li><code>dropna</code>: 该参数用于确定是否删除缺失的数据，默认为 False，即不删除缺失的数据；当该参数设置为 True 时，会删除缺失的数据；</li>
+</ul>
+<h3 id="7-1-2-GroupBy-对象"><a href="#7-1-2-GroupBy-对象" class="headerlink" title="7.1.2 GroupBy 对象"></a>7.1.2 GroupBy 对象</h3><p><code>groupby()</code> 函数并不是直接返回一个新的 DataFrame对象，而是返回一个 <code>GroupBy</code> 对象，该对象包含关于分组的信息。  </p>
+<p>DataFrame 应用 groupby() 之后，返回的是 <code>pandas.api.typing.DataFrameGroupBy&gt;</code> 对象； </p>
+<p>Series 应用 groupby() 之后，返回的是 <code>pandas.api.typing.SeriesGroupBy</code> 对象； </p>
+<p>官方文档 : <a target="_blank" rel="noopener" href="https://pandas.pydata.org/docs/reference/groupby.html">GroupBy</a>  </p>
+<p>对于 <code>GroupBy</code> 对象，并不能直接查看其数据，如下所示：  </p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 依据 qual 列的值，对行数据进行分组</span></span><br><span class="line">df_groupby = df.groupby(by=<span class="string">&#x27;qual&#x27;</span>)</span><br><span class="line">df_groupby</span><br></pre></td></tr></table></figure>
+<p><img src="https://teeyohuang.github.io/pic_bed/Pandas_Base/7_1_2.png" width="70%"></p>
+<p>如果要查看 GroupBy 对象的信息，可以使用以下方法：  </p>
+<ol>
+<li><b>当作迭代器使用</b>  </li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 会依次产出各个分组的 name 和 分组后的 DataFrame 子集</span></span><br><span class="line"><span class="keyword">for</span> group_name, data <span class="keyword">in</span> df_groupby:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;Group Name: <span class="subst">&#123;group_name&#125;</span>\n<span class="subst">&#123;data&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="https://teeyohuang.github.io/pic_bed/Pandas_Base/7_1_2_1.png" width="45%">  </p>
+<ol>
+<li><b>groups 方法</b>  </li>
+</ol>
+<p>会返回一个字典，字典的键为分组的组名，值为分组后聚在一起的标签：{group name : group labels}  </p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Dict &#123;group name -&gt; group labels&#125;.</span></span><br><span class="line">df_groupby.groups</span><br></pre></td></tr></table></figure>
+<p><img src="https://teeyohuang.github.io/pic_bed/Pandas_Base/7_1_2_2.png" width="100%"> </p>
+<ol>
+<li><b>indices 方法</b>  </li>
+</ol>
+<p>会返回一个字典，字典的键为分组的组名，值为分组后聚在一起的数据的序号：{group name : group indices}  </p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Dict &#123;group name -&gt; group indices&#125;.</span></span><br><span class="line">df_groupby.indices</span><br></pre></td></tr></table></figure>
+<p><img src="https://teeyohuang.github.io/pic_bed/Pandas_Base/7_1_2_3.png" width="45%">  </p>
+<ol>
+<li><b>get_group 方法</b>   </li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 取 分组名为 5 的部分</span></span><br><span class="line">df_groupby.get_group(<span class="number">5</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="https://teeyohuang.github.io/pic_bed/Pandas_Base/7_1_2_4.png" width="45%">  </p>
+<h3 id="7-1-3-分组示例"><a href="#7-1-3-分组示例" class="headerlink" title="7.1.3 分组示例"></a>7.1.3 分组示例</h3><p>在知道如何查看 <code>GroupBy</code> 对象之后，可以来看一下 <code>groupby()</code> 方法的使用示例。</p>
+<ol>
+<li><b>按标签分组示例</b>    </li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 按标签分组示例, 令 by=列名</span></span><br><span class="line">df.groupby(by=<span class="string">&#x27;alco&#x27;</span>).groups</span><br></pre></td></tr></table></figure>
+<p><img src="https://teeyohuang.github.io/pic_bed/Pandas_Base/7_1_3_1.png" width="100%">  </p>
+<ol>
+<li><b>按函数分组示例</b>    </li>
+</ol>
+<p>by 为函数时：it’s called on each value of the object’s index. 即将 DataFrame 对象的每个index都作为函数的输入去获取输出  </p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 按函数分组示例, 会将 DataFrame 的每个 index 作为函数的输入</span></span><br><span class="line"><span class="comment"># 该示例的函数是以每一行数据的最小值作为分组依据</span></span><br><span class="line">df.groupby(<span class="keyword">lambda</span> x: <span class="built_in">min</span>(df.loc[x])).groups</span><br></pre></td></tr></table></figure>
+<p><img src="https://teeyohuang.github.io/pic_bed/Pandas_Base/7_1_3_2.png" width="100%">    </p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 依据每一行 的 pH 的不同范围，映射不同的分组组名</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">gen_key</span>(<span class="params">S_, col</span>):</span><br><span class="line">    <span class="keyword">if</span> S_[col] &lt;<span class="number">3.3</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;G1&#x27;</span></span><br><span class="line">    <span class="keyword">elif</span> S_[col] &gt;<span class="number">3.4</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;G2&#x27;</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;G3&#x27;</span></span><br><span class="line"></span><br><span class="line">df.groupby(by=<span class="keyword">lambda</span> index: gen_key(df.loc[index], <span class="string">&#x27;pH&#x27;</span>) ).apply(<span class="keyword">lambda</span> x:x)</span><br></pre></td></tr></table></figure>
+<p><img src="https://teeyohuang.github.io/pic_bed/Pandas_Base/7_1_3_2_b.png" width="50%">    </p>
+<ol>
+<li><b>表达式分组示例</b>    </li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># by 为一个表达式，此例中的表达式是判断表达式, 所以会分为 False 或者 True 两种分组</span></span><br><span class="line">df.groupby(by=df.pH&gt;<span class="number">3.3</span>).groups</span><br></pre></td></tr></table></figure>
+<p><img src="https://teeyohuang.github.io/pic_bed/Pandas_Base/7_1_3_3.png" width="90%">   </p>
+<ol>
+<li><b>as_index 示例</b>  </li>
+</ol>
+<p>as_index 为 False 时，分组的组名不会作为index  </p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">df.groupby(by=df.pH&gt;<span class="number">3.3</span>, as_index=<span class="literal">True</span>).<span class="built_in">sum</span>()</span><br></pre></td></tr></table></figure>
+<p><img src="https://teeyohuang.github.io/pic_bed/Pandas_Base/7_1_3_4_a.png" width="40%">   </p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">df.groupby(by=df.pH&gt;<span class="number">3.3</span>, as_index=<span class="literal">False</span>).<span class="built_in">sum</span>()</span><br></pre></td></tr></table></figure>
+<p><img src="https://teeyohuang.github.io/pic_bed/Pandas_Base/7_1_3_4_b.png" width="40%">   </p>
+<ol>
+<li><b>分组器 Grouper</b>  </li>
+</ol>
+<p>分组器是 pandas 提供的一个可以执行较为复杂操作的分组工具，具体用法可以参考官方文档:<a target="_blank" rel="noopener" href="https://pandas.pydata.org/docs/reference/api/pandas.Grouper.html">Grouper</a><br>它在处理一些复杂结构的 DataFrame时比较高效，比如有时间序列的 DataFrame，这里不过多描述。  </p>
+<h3 id="7-1-4-分组对象的操作"><a href="#7-1-4-分组对象的操作" class="headerlink" title="7.1.4 分组对象的操作"></a>7.1.4 分组对象的操作</h3><p>使用 groupby 方法对数据进行分组之后，可以对分组对象进行一些操作，来对各个分组的数据做进一步的处理。在 7.1.2 小节中介绍了查看分组对象的操作，这里主要是讲一下如何对分组数据进行处理的操作。 </p>
+<p>官方文档：<a target="_blank" rel="noopener" href="https://pandas.pydata.org/docs/reference/groupby.html#function-application">function-application</a>  </p>
+<ol>
+<li><p><b>apply</b>  </p>
+<p> 官方文档:<a target="_blank" rel="noopener" href="https://pandas.pydata.org/docs/reference/api/pandas.core.groupby.DataFrameGroupBy.apply.html">DataFrameGroupBy.apply</a>  </p>
+<p> 它和 DataFrame 的 apply 方法类似，只不过 DataFrameGroupBy 的 apply 方法是对分组后每个子集上的数据进行处理。从下面的code可以清晰的分辨出二者的区别：  </p>
+ <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 使用 DataFrame 的 apply 方法, 默认情况下是对整个DataFrame的每列数据进行处理</span></span><br><span class="line"><span class="comment"># 所以下方的 code 是求每一列的均值</span></span><br><span class="line">df.apply(<span class="keyword">lambda</span> x:x.mean())</span><br></pre></td></tr></table></figure>
+<p> <img src="https://teeyohuang.github.io/pic_bed/Pandas_Base/7_1_4_1_a.png" width="20%"> </p>
+ <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 使用 groupby 对象的 apply 方法, 是对各个分组内的 DataFrame 进行处理</span></span><br><span class="line"><span class="comment"># 所以以下code是对 分组 5,6,7 的三个 子 DataFrame 进行处理，分别得到了 3个不同分组内 各列的数据的均值</span></span><br><span class="line">df_groupby.apply(<span class="keyword">lambda</span> x: x.mean() )</span><br></pre></td></tr></table></figure>
+<p> <img src="https://teeyohuang.github.io/pic_bed/Pandas_Base/7_1_4_1_b.png" width="60%"> </p>
+<p> 由于 apply 是一个非常灵活的方法，所以如果有一些特定的方法支持特定的操作，建议使用特定的操作，这样效率更高，比如上面两个code可以改写为：</p>
+ <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">df.mean()</span><br><span class="line">df_groupby.mean()</span><br></pre></td></tr></table></figure>
+<p> 效果不变，但是运行效率更高。  </p>
+ <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 定义一个 根据 col 的值，取最大的两行数据的函数</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">first_2</span>(<span class="params">sub_df_, col</span>):</span><br><span class="line"><span class="keyword">return</span> sub_df_.nlargest(<span class="number">2</span>, col)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 对各个分组应用这个函数, 第一个 sub_df_ 已经由各个分组的子 DataFrame 自动传入了</span></span><br><span class="line">df_groupby.apply(first_2, <span class="string">&#x27;chlo&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<p> <img src="https://teeyohuang.github.io/pic_bed/Pandas_Base/7_1_4_1_c.png" width="50%"><br> <br></p>
+</li>
+<li><p><b>transform</b>  </p>
+<p> 它对每个分组调用一个函数，并返回一个与<b> 原始 DataFrame 具有<font color="orangered">相同索引</font>的 DataFrame，并使用经过转换的值替换原来位置的值。</b>  </p>
+<p> 官方文档:<a target="_blank" rel="noopener" href="https://pandas.pydata.org/docs/reference/api/pandas.core.groupby.DataFrameGroupBy.transform.html">transform</a>  </p>
+ <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 依据 qual 分组, 然后对每组的数据应用 Transform</span></span><br><span class="line">df.groupby(by=<span class="string">&#x27;qual&#x27;</span>).transform(<span class="string">&#x27;mean&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<p> <img src="https://teeyohuang.github.io/pic_bed/Pandas_Base/7_1_4_2.png" width="70%">  </p>
+<p> 由示例结果可知，分组的组名并未被展示出来，且数据也并未按照组别进行分布，<b>还是保持了与原来 DataFrame 的 index 相同的 index</b>。 但是仔细观察的话，会发现，<b> transform 确实是对各个组内的数据来进行应用的。</b>    </p>
+<p> 比如   </p>
+<ul>
+<li>[‘第0行’, ‘第1行’, ‘第2行’, ‘第4行’, ‘第5行’, ‘第6行’, ‘第9行’] 的数据是一样的，这是因为这些行在分组时，被分到了同一个组(qual=5)，  </li>
+<li>[‘第7行’, ‘第8行’] 的数据是一样的，这是因为这两行在分组时被分到了(qual=7)，  </li>
+<li><p>还剩一个[ ‘第3行’ ] 的数据独自成组(qual=6);  </p>
+<p>因此，各个组分别被应用了transform(‘mean’), 求出了各个组内的行均值，<b>并且原始的行数据被该结果替换掉。</b><br><br></p>
+</li>
+</ul>
+</li>
+<li><p><b>filter</b>   </p>
+<p> 它对每个分组调用判断标准，并返回一个布尔值，<b>用于过滤分组，只保留通过过滤的组。</b></p>
+<p> 官方文档:<a target="_blank" rel="noopener" href="https://pandas.pydata.org/docs/reference/api/pandas.core.groupby.DataFrameGroupBy.filter.html">DataFrameGroupBy.filter</a>   </p>
+ <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 条件为: 各个分组内的 chlo列均值 小于 0.07</span></span><br><span class="line">df.groupby(by=<span class="string">&#x27;qual&#x27;</span>).<span class="built_in">filter</span>(<span class="keyword">lambda</span> x: x[<span class="string">&#x27;chlo&#x27;</span>].mean() &lt; <span class="number">0.07</span>)</span><br><span class="line"><span class="comment"># 只会返回满足条件的组</span></span><br></pre></td></tr></table></figure>
+<p> <img src="https://teeyohuang.github.io/pic_bed/Pandas_Base/7_1_4_3_a.png" width="55%">   </p>
+ <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 其实可以应用 apply 函数来查看过滤条件返回的bool值</span></span><br><span class="line">df.groupby(by=<span class="string">&#x27;qual&#x27;</span>).apply(<span class="keyword">lambda</span> x: x[<span class="string">&#x27;chlo&#x27;</span>].mean() &lt; <span class="number">0.07</span>)</span><br></pre></td></tr></table></figure>
+<p> <img src="https://teeyohuang.github.io/pic_bed/Pandas_Base/7_1_4_3_b.png" width="20%">   </p>
+<p> 如果所示，filter 当中的过滤条件就是这样的，每个组都对应了一个 bool 值。<br> <br></p>
+</li>
+<li><p><b>pipe</b>  </p>
+<p> 管道函数，可以将函数作为参数，<b>将函数作用于分组后的数据</b>。pipe 方法主要是为了增加可读性和代码简洁性。  </p>
+ <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 增加新列的示例函数</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">assign_new_col</span>(<span class="params">df_, col</span>):</span><br><span class="line">    df_[<span class="string">&#x27;testa&#x27;</span>] = df_[col]*<span class="number">10</span></span><br><span class="line">    <span class="keyword">return</span> df_</span><br><span class="line"></span><br><span class="line"><span class="comment"># 用pipe管道对分组对象连续进行函数操作</span></span><br><span class="line">df.groupby(<span class="string">&#x27;qual&#x27;</span>).pipe(<span class="keyword">lambda</span> x: x.mean()) \</span><br><span class="line">                    .pipe(assign_new,<span class="string">&#x27;alco&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<p> <img src="https://teeyohuang.github.io/pic_bed/Pandas_Base/7_1_4_4.png" width="80%">   </p>
+</li>
+</ol>
+<h2 id="7-2-聚合"><a href="#7-2-聚合" class="headerlink" title="7.2 聚合"></a>7.2 聚合</h2></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://Teeyohuang.github.io">TeeyoHuang</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://teeyohuang.github.io/Pandas-Base/PD_07_Pandas_Senior_Data_Operations.html">https://teeyohuang.github.io/Pandas-Base/PD_07_Pandas_Senior_Data_Operations.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://Teeyohuang.github.io" target="_blank">朝花夕拾</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://teeyohuang.github.io/pic_bed/Pandas_Base/7_0.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-full"><a href="/Pandas-Base/PD_06_Pandas_Medior_Data_Operations.html" title="6-pandas数据进阶操作"><img class="cover" src="https://teeyohuang.github.io/pic_bed/Pandas_Base/6_0.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">6-pandas数据进阶操作</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/teeyo_comic.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">TeeyoHuang</div><div class="author-info__description">『Stay Hungry. Stay Foolish.』</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">31</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/teeyohuang" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="/teeyohuang@163.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog, just for recording and sharing.</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#7-pandas%E6%95%B0%E6%8D%AE%E5%88%86%E7%BB%84%E8%81%9A%E5%90%88%E5%90%88%E5%B9%B6"><span class="toc-text">7.pandas数据分组聚合合并</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#7-1-%E5%88%86%E7%BB%84"><span class="toc-text">7.1 分组</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#7-1-1-groupby-%E6%96%B9%E6%B3%95"><span class="toc-text">7.1.1 groupby 方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-1-2-GroupBy-%E5%AF%B9%E8%B1%A1"><span class="toc-text">7.1.2 GroupBy 对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-1-3-%E5%88%86%E7%BB%84%E7%A4%BA%E4%BE%8B"><span class="toc-text">7.1.3 分组示例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-1-4-%E5%88%86%E7%BB%84%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%93%8D%E4%BD%9C"><span class="toc-text">7.1.4 分组对象的操作</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-2-%E8%81%9A%E5%90%88"><span class="toc-text">7.2 聚合</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/Pandas-Base/PD_07_Pandas_Senior_Data_Operations.html" title="7-pandas数据分组聚合合并"><img src="https://teeyohuang.github.io/pic_bed/Pandas_Base/7_0.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="7-pandas数据分组聚合合并"/></a><div class="content"><a class="title" href="/Pandas-Base/PD_07_Pandas_Senior_Data_Operations.html" title="7-pandas数据分组聚合合并">7-pandas数据分组聚合合并</a><time datetime="2023-10-31T16:06:00.000Z" title="发表于 2023-11-01 00:06:00">2023-11-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/Pandas-Base/PD_06_Pandas_Medior_Data_Operations.html" title="6-pandas数据进阶操作"><img src="https://teeyohuang.github.io/pic_bed/Pandas_Base/6_0.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="6-pandas数据进阶操作"/></a><div class="content"><a class="title" href="/Pandas-Base/PD_06_Pandas_Medior_Data_Operations.html" title="6-pandas数据进阶操作">6-pandas数据进阶操作</a><time datetime="2023-10-31T16:05:00.000Z" title="发表于 2023-11-01 00:05:00">2023-11-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/Pandas-Base/PD_05_Pandas_Junior_Data_Operations.html" title="5-pandas数据基础操作"><img src="https://teeyohuang.github.io/pic_bed/Pandas_Base/5_0.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="5-pandas数据基础操作"/></a><div class="content"><a class="title" href="/Pandas-Base/PD_05_Pandas_Junior_Data_Operations.html" title="5-pandas数据基础操作">5-pandas数据基础操作</a><time datetime="2023-10-31T16:04:00.000Z" title="发表于 2023-11-01 00:04:00">2023-11-01</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2023 - 2024 By TeeyoHuang</div><div class="footer_custom_text">Hi, welcome to my <a target="_blank" rel="noopener" href="https://butterfly.js.org/">blog</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'HgAn8i4mE43FcGFWsenlAi1P-gzGzoHsz',
+      appKey: 'KUQAsQXyj2wWidCEzHg4ds1i',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !true) {
+  if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><canvas id="universe"></canvas><script defer src="/js/universe.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div><!-- hexo injector body_end start --> <script data-pjax>if(document.getElementById('recent-posts') && (location.pathname ==='/'|| '/' ==='all')){
+    var parent = document.getElementById('recent-posts');
+    var child = '<div class="recent-post-item" style="width:100%;height: auto"><div id="catalog_magnet"><div class="magnet_item"><a class="magnet_link" href="https://Teeyohuang.github.io/categories/Data-Structure/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🎮 数据结构与算法 (17)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://Teeyohuang.github.io/categories/Machine-Learning/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">📚 机器学习 (1)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://Teeyohuang.github.io/categories/Deep-Learning/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">👩‍💻 深度学习 (5)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://Teeyohuang.github.io/categories/Computer-Vision/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">📒 计算机视觉 (1)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://Teeyohuang.github.io/categories/Pandas-Base/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">💡 Pandas基础入门 (7)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item" style="visibility: hidden"></div><a class="magnet_link_more"  href="https://Teeyohuang.github.io/categories" style="flex:1;text-align: center;margin-bottom: 10px;">查看更多...</a></div></div>';
+    console.log('已挂载magnet')
+    parent.insertAdjacentHTML("afterbegin",child)}
+     </script><style>#catalog_magnet{flex-wrap: wrap;display: flex;width:100%;justify-content:space-between;padding: 10px 10px 0 10px;align-content: flex-start;}.magnet_item{flex-basis: calc(33.333333333333336% - 5px);background: #f2f2f2;margin-bottom: 10px;border-radius: 8px;transition: all 0.2s ease-in-out;}.magnet_item:hover{background: #cad6d9}.magnet_link_more{color:#555}.magnet_link{color:black}.magnet_link:hover{color:white}@media screen and (max-width: 600px) {.magnet_item {flex-basis: 100%;}}.magnet_link_context{display:flex;padding: 10px;font-size:16px;transition: all 0.2s ease-in-out;}.magnet_link_context:hover{padding: 10px 20px;}</style>
+    <style></style><script data-pjax>
+  function butterfly_footer_beautify_injector_config(){
+    var parent_div_git = document.getElementById('footer-wrap');
+    var item_html = '<div id="workboard"></div><p id="ghbdages"><a class="github-badge" target="_blank" href="https://hexo.io/" style="margin-inline:5px" data-title="博客框架为Hexo" title=""><img src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&amp;logo=hexo" alt=""/></a><a class="github-badge" target="_blank" href="https://butterfly.js.org/" style="margin-inline:5px" data-title="主题版本Butterfly" title=""><img src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&amp;logo=bitdefender" alt=""/></a><a class="github-badge" target="_blank" href="https://github.com/" style="margin-inline:5px" data-title="本站项目由Github托管" title=""><img src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&amp;logo=GitHub" alt=""/></a><a class="github-badge" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" style="margin-inline:5px" data-title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可" title=""><img src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&amp;logo=Claris" alt=""/></a></p>';
+    console.log('已挂载butterfly_footer_beautify')
+    parent_div_git.insertAdjacentHTML("beforeend",item_html)
+    }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_footer_beautify_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_footer_beautify_injector_config();
+  }
+  </script><script async src="/js/runtime.js"></script><script data-pjax>
+  function butterfly_swiper_injector_config(){
+    var parent_div_git = document.getElementById('recent-posts');
+    var item_html = '<div class="recent-post-item" style="height: auto;width: 100%"><div class="blog-slider swiper-container-fade swiper-container-horizontal" id="swiper_container"><div class="blog-slider__wrp swiper-wrapper" style="transition-duration: 0ms;"><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="Deep-Learning/DL_00_introduction.html" alt=""><img width="48" height="48" src="https://teeyohuang.github.io/pic_bed/Deep_Learning/DL.webp" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2023-05-01</span><a class="blog-slider__title" href="Deep-Learning/DL_00_introduction.html" alt="">深度学习导论</a><div class="blog-slider__text">深度学习 系列专栏简要说明</div><a class="blog-slider__button" href="Deep-Learning/DL_00_introduction.html" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="Pandas-Base/PD_06_Pandas_Medior_Data_Operations.html" alt=""><img width="48" height="48" src="https://teeyohuang.github.io/pic_bed/Pandas_Base/6_0.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2023-11-01</span><a class="blog-slider__title" href="Pandas-Base/PD_06_Pandas_Medior_Data_Operations.html" alt="">6-pandas数据进阶操作</a><div class="blog-slider__text">pandas数据进阶操作, 如条件查询、统计查询等</div><a class="blog-slider__button" href="Pandas-Base/PD_06_Pandas_Medior_Data_Operations.html" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="Pandas-Base/PD_07_Pandas_Senior_Data_Operations.html" alt=""><img width="48" height="48" src="https://teeyohuang.github.io/pic_bed/Pandas_Base/7_0.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2023-11-01</span><a class="blog-slider__title" href="Pandas-Base/PD_07_Pandas_Senior_Data_Operations.html" alt="">7-pandas数据分组聚合合并</a><div class="blog-slider__text">pandas数据进阶操作, 如条件查询、统计查询等</div><a class="blog-slider__button" href="Pandas-Base/PD_07_Pandas_Senior_Data_Operations.html" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="Data-Structure/DS_00_introduction.html" alt=""><img width="48" height="48" src="https://teeyohuang.github.io/pic_bed/Data_Structure/Data_Structure_and_Algorithm_webp.webp" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2023-04-29</span><a class="blog-slider__title" href="Data-Structure/DS_00_introduction.html" alt="">数据结构与算法_Python</a><div class="blog-slider__text">数据结构与算法_Python 系列专栏简要说明</div><a class="blog-slider__button" href="Data-Structure/DS_00_introduction.html" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="Pandas-Base/PD_05_Pandas_Junior_Data_Operations.html" alt=""><img width="48" height="48" src="https://teeyohuang.github.io/pic_bed/Pandas_Base/5_0.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2023-11-01</span><a class="blog-slider__title" href="Pandas-Base/PD_05_Pandas_Junior_Data_Operations.html" alt="">5-pandas数据基础操作</a><div class="blog-slider__text">Pandas基础的数据操作, 比如增删改查</div><a class="blog-slider__button" href="Pandas-Base/PD_05_Pandas_Junior_Data_Operations.html" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="Pandas-Base/PD_02_Pandas_Jupyter_installation.html" alt=""><img width="48" height="48" src="https://teeyohuang.github.io/pic_bed/Pandas_Base/2_0.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2023-11-01</span><a class="blog-slider__title" href="Pandas-Base/PD_02_Pandas_Jupyter_installation.html" alt="">2-Pandas与Jupyter环境安装</a><div class="blog-slider__text">Pandas与Jupyter环境安装</div><a class="blog-slider__button" href="Pandas-Base/PD_02_Pandas_Jupyter_installation.html" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="Pandas-Base/PD_04_Pandas_Read_file.html" alt=""><img width="48" height="48" src="https://teeyohuang.github.io/pic_bed/Pandas_Base/4_0.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2023-11-01</span><a class="blog-slider__title" href="Pandas-Base/PD_04_Pandas_Read_file.html" alt="">4-Pandas读取和保存数据文件</a><div class="blog-slider__text">Pandas如何读取常见的数据文件</div><a class="blog-slider__button" href="Pandas-Base/PD_04_Pandas_Read_file.html" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="Pandas-Base/PD_03_Pandas_base_knowledge.html" alt=""><img width="48" height="48" src="https://teeyohuang.github.io/pic_bed/Pandas_Base/3_0.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2023-11-01</span><a class="blog-slider__title" href="Pandas-Base/PD_03_Pandas_base_knowledge.html" alt="">3-Pandas基础知识</a><div class="blog-slider__text">Pandas的基础数据结构和数据类型</div><a class="blog-slider__button" href="Pandas-Base/PD_03_Pandas_base_knowledge.html" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="Pandas-Base/PD_01_Introduction.html" alt=""><img width="48" height="48" src="https://teeyohuang.github.io/pic_bed/Pandas_Base/1_0.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2023-11-01</span><a class="blog-slider__title" href="Pandas-Base/PD_01_Introduction.html" alt="">1-Pandas教程简介</a><div class="blog-slider__text">Pandas基础入门系列文章简介</div><a class="blog-slider__button" href="Pandas-Base/PD_01_Introduction.html" alt="">详情   </a></div></div></div><div class="blog-slider__pagination swiper-pagination-clickable swiper-pagination-bullets"></div></div></div>';
+    console.log('已挂载butterfly_swiper')
+    parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+    }
+  var elist = 'undefined'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_swiper_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_swiper_injector_config();
+  }
+  </script><script defer src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.js"></script><script defer data-pjax src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper_init.js"></script><div class="js-pjax"><script async="async">var arr = document.getElementsByClassName('recent-post-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '2s');
+    arr[i].setAttribute('data-wow-delay', '1s');
+    arr[i].setAttribute('data-wow-offset', '100');
+    arr[i].setAttribute('data-wow-iteration', '2');
+  }</script><script async="async">var arr = document.getElementsByClassName('card-widget');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('pagination');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script></div><script defer src="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/wow.min.js"></script><script defer src="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/wow_init.js"></script><!-- hexo injector body_end end --></body></html>
