@@ -7,7 +7,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://teeyohuang.github.io/pic_bed/Machine_Learning/4_1.png">
 <meta property="article:published_time" content="2023-05-31T16:04:00.000Z">
-<meta property="article:modified_time" content="2024-01-04T15:02:18.587Z">
+<meta property="article:modified_time" content="2024-01-16T16:06:08.918Z">
 <meta property="article:author" content="TeeyoHuang">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://teeyohuang.github.io/pic_bed/Machine_Learning/4_1.png"><link rel="shortcut icon" href="/img/favicon_T.png"><link rel="canonical" href="https://teeyohuang.github.io/Machine-Learning/ML_04_Linear_Model_1.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
@@ -55,7 +55,7 @@
   isHome: false,
   isHighlightShrink: false,
   isToc: true,
-  postUpdate: '2024-01-04 23:02:18'
+  postUpdate: '2024-01-17 00:06:08'
 }</script><script>(win=>{
       win.saveToLocal = {
         set: (key, value, ttl) => {
@@ -163,7 +163,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-double-row-display@1.00/cardlistpost.min.css"/>
 <style>#recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap > .tags:before {content:"\A";
   white-space: pre;}#recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap > .tags > .article-meta__separator{display:none}</style>
-<link rel="stylesheet" href="/css/runtime.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiperstyle.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='screen'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/teeyo_comic.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">39</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于作者</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://teeyohuang.github.io/pic_bed/Machine_Learning/4_1.png')"><nav id="nav"><span id="blog-info"><a href="/" title="朝花夕拾"><span class="site-name">朝花夕拾</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于作者</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">4-线性模型--(上)</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-05-31T16:04:00.000Z" title="发表于 2023-06-01 00:04:00">2023-06-01</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-01-04T15:02:18.587Z" title="更新于 2024-01-04 23:02:18">2024-01-04</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Machine-Learning/">机器学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">5k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>17分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="4-线性模型--(上)"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><!-- <img src="https://cdn.staticaly.com/gh/teeyohuang/pic_bed@main/img/csdn_head_webp.webp" width=70%>   -->
+<link rel="stylesheet" href="/css/runtime.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='screen'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiperstyle.css" media="print" onload="this.media='all'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/teeyo_comic.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">39</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于作者</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://teeyohuang.github.io/pic_bed/Machine_Learning/4_1.png')"><nav id="nav"><span id="blog-info"><a href="/" title="朝花夕拾"><span class="site-name">朝花夕拾</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于作者</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">4-线性模型--(上)</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-05-31T16:04:00.000Z" title="发表于 2023-06-01 00:04:00">2023-06-01</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-01-16T16:06:08.918Z" title="更新于 2024-01-17 00:06:08">2024-01-17</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Machine-Learning/">机器学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">5k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>17分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="4-线性模型--(上)"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><!-- <img src="https://cdn.staticaly.com/gh/teeyohuang/pic_bed@main/img/csdn_head_webp.webp" width=70%>   -->
 <p><img src="https://teeyohuang.github.io/pic_bed/img/csdn_head_webp.webp" width="70%"></p>
 <hr style="border:solid; height:1px; color=#000000 size=1">  
 
@@ -183,11 +183,11 @@
 <li>$x$ 可以是一个实数，比如在本示例中， $x$ 就代表距离，是一个实数。</li>
 <li>$x$ 也可以<b><font color="orangered">是一个多维向量</font></b>(机器学习中说到向量一般都<strong>默认为列向量</strong>): $x=\{ x_1, x_2, \cdots, x_n\}^T$，<strong>其中下标代表的是 $x$ 的维度</strong>。这代表着还有其他维度的因素会影响到回归值，比如在实际生活中，除了距离，还有天气、路况、配送时段等等因素，也可能会影响到外卖的配送时间。这样的话，$x$ 就不止一个值了，就是几个值组成的一个向量，此时被称为<b><font color="orangered">多元线性回归</font></b>。  </li>
 </ul>
-<p>如果 $x$ 是一个向量，那对应的<strong>列向量</strong> $w$ 就为：$w = \{w_1, w_2, \cdots ,w_n\}^T$; $w$ 在数学上叫作斜率，在线性模型中可以被称为参数：<font color="navy">_Parameter_</font>。更多的时候，我们称它为<strong>权重</strong>：<font color="navy">_Weight_</font>，因为它刻画了它<strong>对应的这个输入特征对于结果的影响力</strong>。其中 $w_0$ 称为截距。  </p>
+<p>如果 $x$ 是一个向量，那对应的<strong>列向量</strong> $w$ 就为：$w = \{w_1, w_2, \cdots ,w_n\}^T$; $w$ 在数学上叫作斜率，在线性模型中可以被称为参数：<font color="navy"><i>Parameter</i></font>。更多的时候，我们称它为<strong>权重</strong>：<font color="navy"><i>Weight</i></font>，因为它刻画了它<strong>对应的这个输入特征对于结果的影响力</strong>。其中 $w_0$ 称为截距。  </p>
 <p>线性回归最终的目标就是希望能够学习到最合适的 $w$ 参数，来刻画 $y$ 和 $x$ 的关系，<strong>从二维散点图上去理解的话，就是希望找到一条直线，使得散点图中的点，都尽可能的靠近这条直线</strong>。  </p>
 <p>如果我们对于输入变量 $x$ 增设一个维度 $x_0 = 1$，去与截距 $w_0$ 相乘，即 $x=\{ 1, x_1, x_2, \cdots, x_n\}^T$，$w = \{w_0, w_1, w_2, \cdots ,w_n\}^T$, 这样就能将式 $(4-1)$ 统一为形式：  </p>
 <script type="math/tex; mode=display">h_w(x)  = \sum_{i=0}^n w_i x_i = w^Tx \quad OR \quad x^Tw, \tag{4-2}</script><p>回忆<b><font color="red">统计学习三要素：模型、策略、算法。</font></b>到这里，我们就确定了线性回归问题的三要素中的<strong>模型空间（假设空间）</strong> <font color="orange">$h_w(x)$</font>。  </p>
-<h3 id="4-1-2-最小二乘法"><a href="#4-1-2-最小二乘法" class="headerlink" title="4.1.2 最小二乘法"></a>4.1.2 最小二乘法</h3><p><b><font color="red">最小二乘法</font></b>（Least Squares Method，简写为 <b>LS，所以也叫最小平方算法</b>）,是一种数学优化建模方法。<b><font color="orange">它通过最小化误差的平方和 来寻找数据的最佳函数匹配。</font></b>&lt;/font&gt;利用最小二乘法可以简便的求得未知的数据，并使得求得的数据与实际数据之间误差的平方和为最小。  </p>
+<h3 id="4-1-2-最小二乘法"><a href="#4-1-2-最小二乘法" class="headerlink" title="4.1.2 最小二乘法"></a>4.1.2 最小二乘法</h3><p><b><font color="red">最小二乘法</font></b>（Least Squares Method，简写为 <b>LS，所以也叫最小平方算法</b>）,是一种数学优化建模方法。<font color="orange"><b>它通过最小化误差的平方和 来寻找数据的最佳函数匹配。</b></font>利用最小二乘法可以简便的求得未知的数据，并使得求得的数据与实际数据之间误差的平方和为最小。  </p>
 <p>所以我们依据最小二乘法的策略，使用 <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Least_squares">（最小）平方误差 (<font face="Timese" new roman> Least Squares Error, LSE)</font></a> 作为模型的损失函数，（有时候也被叫做最小二乘损失函数）:  </p>
 <script type="math/tex; mode=display">J(w) = \sum_{i=1}^m(h_w(x^{(i)})-y^{(i)})^2, \tag{4-3-1}</script><p>上式中的上标 $i$ 指的是第 $i$ 个输入数据，$m$ 代表训练数据的规模，即总共有多少个输入样本。  </p>
 <p>下图截取自 Wikipedia：</p>
@@ -233,36 +233,33 @@ w_n
 <p><img src="https://teeyohuang.github.io/pic_bed/Machine_Learning/C4_result_1.jpg" width="80%"> <br>  </p>
 <h3 id="4-1-4-最小均方算法"><a href="#4-1-4-最小均方算法" class="headerlink" title="4.1.4 最小均方算法"></a>4.1.4 最小均方算法</h3><h4 id="4-1-4-1-最小均方算法的定义"><a href="#4-1-4-1-最小均方算法的定义" class="headerlink" title="4.1.4.1 最小均方算法的定义"></a>4.1.4.1 最小均方算法的定义</h4><p><b>最小均方算法（Least Mean Square，简称为LMS）</b>在互联网上经常和 <b>最小平方算法（即最小二乘法，Least Square，简称为LS）</b>混为一谈，其实它们是两个不同的算法，但是确实又在某些方面很相似，极容易混淆。所以这里补充讲解一下，简单的来说一下二者的联系和区别。  </p>
 <p>首先要明确的一点，是<b>LMS</b>方法和<b>LS</b>方法都是属于机器学习三要素中的<b>策略</b>这一部分，即<b>依据怎样的准则选择最优的参数</b>。 </p>
-<font color="red">最小均方算法的起源是1960年代，由Widrow和Hoff在<b>自适应滤波器领域</b>提出的一种优化算法，他们希望找到一种可以<b>自动调整权重以最小化输出误差的方法</b>。他们提出的最小均方滤波器(Least Mean Square Filter)如下所示</font>：  
-
-<img src="https://teeyohuang.github.io/pic_bed/Machine_Learning/C4_LMS_1.jpg" width="50%">  
-
-图中变量说明：  
-- $ x(n) 是输入信号脉冲 $  
-- $ h(n) 一个未知的滤波系统（就是待求解的滤波器） $    
-- $ y(n) 是未知滤波系统的输出信号脉冲 $    
-- $ v(n) 是噪音 $   
-- $ d(n) = y(n) + v(n) $  
-- $ \hat{h}(n) 是自适应滤波器（目的就是期望通过这个自适应滤波器来模拟待求解滤波器） $ 
-- $ \hat{y}(n) 是自适应滤波器的输出 $  
-- $ e(n) = d(n) - \hat{y}(n) 两个滤波器的输出差异 $  
-
-<font color="navy">以机器学习的角度来看，$ x(n) $ 就是输入样本，$ y(n) $ 就是输入对应的真实标签(label);  
-现在希望能够构建一个模型 $ \hat{h}(n) $ 来拟合这个真实的未知系统 $ h(n) $，然后 $ \hat{y}(n) $ 就是模型的预测输出。  
-而学习的策略就是使得对于每一个输入信号脉冲 $ x(n) $，预测输出脉冲 $ \hat{y}(n) $ 与 真实系统输出脉冲 $ y(n) $  的误差平方值最小。</font>  
-
+<p><font color="red">最小均方算法的起源是1960年代，由Widrow和Hoff在<b>自适应滤波器领域</b>提出的一种优化算法，他们希望找到一种可以<b>自动调整权重以最小化输出误差的方法</b>。他们提出的最小均方滤波器(Least Mean Square Filter)如下所示</font>：  </p>
+<p><img src="https://teeyohuang.github.io/pic_bed/Machine_Learning/C4_LMS_1.jpg" width="50%">  </p>
+<p>图中变量说明：  </p>
+<ul>
+<li>$ x(n)$ 是输入信号脉冲</li>
+<li>$ h(n)$ 一个未知的滤波系统（就是待求解的滤波器）</li>
+<li>$ y(n)$ 是未知滤波系统的输出信号脉冲</li>
+<li>$ v(n)$ 是噪音</li>
+<li>$ d(n) = y(n) + v(n) $</li>
+<li>$ \hat{h}(n)$ 是自适应滤波器（目的就是期望通过这个自适应滤波器来模拟待求解滤波器</li>
+<li>$ \hat{y}(n)$ 是自适应滤波器的输出</li>
+<li>$ e(n) = d(n) - \hat{y}(n)$ 两个滤波器的输出差异   </li>
+</ul>
+<p>以机器学习的角度来看，$ x(n) $ 就是输入样本，$ y(n) $ 就是输入对应的真实标签(label);  现在希望能够构建一个模型 $ \hat{h}(n) $ 来拟合这个真实的未知系统 $ h(n) $，然后 $ \hat{y}(n) $ 就是模型的预测输出。  </p>
+<p><font color="orangered">而学习的策略就是使得对于每一个输入信号脉冲 $ x(n) $，预测输出脉冲 $ \hat{y}(n) $ 与 真实系统输出脉冲 $ y(n) $  的误差平方值最小</font>。  </p>
 <p><b>而显然，仅仅输入一次信号，是无法准确的拟合一个未知滤波系统，所以需要多次输入信号，然后不断调整自适应滤波器的参数，使得输出的误差平方值最小。</b>  </p>
 <p><b>所以，如果对于这个系统，<font color="OrangeRed">后续每一次的输入信号，都使得这一次输出的误差平方值最小，就说明自适应滤波器 $ \hat{h}(n) $ 已经能够较好的拟合未知系统 $ h(n) $ 了</font>。这就是最小均方算法（Least Mean Square）</b>。  </p>
-<p>从这里就能知道，<font color="OrangeRed">最小均方算法 (Least Mean Square) 中的 <b>均</b>本来指的是<b>期望&lt;/b &gt;，而不是简单的算术平均值</b></font>。  </p>
+<p>从这里就能知道，<font color="OrangeRed">最小均方算法 (Least Mean Square) 中的 <b>均</b>本来指的是<b>期望</b>，而不是简单的算术平均值</font>。  </p>
 <ul>
 <li>图一：<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Least_mean_squares_filter#Derivation">LMS filter</a> 定义(from Wikipedia)  </li>
 </ul>
 <p><img src="https://teeyohuang.github.io/pic_bed/Machine_Learning/C4_LMS_2.jpg" width="100%"><br>  </p>
 <ul>
-<li>图二：<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Expected_value">Expected Value</a>定义(from Wikipedia)<br>在统计学中，期望(Expected Value)有时候也会被称为均值(Mean)。  </li>
+<li>图二：<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Expected_value">Expected Value</a>定义(from Wikipedia)<br><b>在统计学中，期望(Expected Value)有时候也会被称为均值(Mean)</b>。  </li>
 </ul>
 <p><img src="https://teeyohuang.github.io/pic_bed/Machine_Learning/C4_LMS_3.jpg" width="85%">  </p>
-<p>从现实情况入手分析，因为输入脉冲信号是一个接一个出现并通过滤波器的，在输入信号到来之前，是不知道该输入信号具体的情况的！<font color="orangered">所以只能通过<b>一次又一次的迭代调整参数</b>，最小化<b>期望平均误差</b>。 即希望 预测输出信号与滤波器实际输出 之差 的平方值，每一次都达到最小，从统计学的角度来看，就是误差平方变量 $ |e(n)|^2 $ 的期望值越小越好</font>。  </p>
+<p>从现实情况入手分析，因为输入脉冲信号是一个接一个出现并通过滤波器的，在输入信号到来之前，是不知道该输入信号具体的情况的！所以只能通过<b>一次又一次的迭代调整参数</b>，最小化<b>期望平均误差</b>。 即希望 预测输出信号与滤波器实际输出 之差 的平方值，每一次都达到最小，<font color="orangered">从统计学的角度来看，就是误差平方变量 $ |e(n)|^2 $ 的期望值越小越好</font>。  </p>
 <h4 id="4-1-4-2-最小均方算法与最小平方算法的区别"><a href="#4-1-4-2-最小均方算法与最小平方算法的区别" class="headerlink" title="4.1.4.2 最小均方算法与最小平方算法的区别"></a>4.1.4.2 最小均方算法与最小平方算法的区别</h4><p>从上面最小均方算法的原始起源可以看出，其学习过程可以视为机器学习中的<b>在线学习(online-learning)</b>：每当一份新的样本数据到来时就进行一次训练，而不需要等到所有的数据都集齐后再统一进行训练。  </p>
 <p>其损失函数为<b>均方误差(Mean Square Error)</b>:  </p>
 <script type="math/tex; mode=display">J(w) = E[(h_w(x^{(i)})-y^{(i)})^2], \tag{4-6-1}</script><p>即希望对所有样本输出误差的平方的期望值最小，关于均方误差(MSE)，在 4.1.5.1 小节会更为详细探讨。  </p>
@@ -407,7 +404,7 @@ document.body.addEventListener('input', POWERMODE);
     <style></style><script data-pjax>
   function butterfly_footer_beautify_injector_config(){
     var parent_div_git = document.getElementById('footer-wrap');
-    var item_html = '<div id="workboard"></div><p id="ghbdages"><a class="github-badge" target="_blank" href="https://hexo.io/" style="margin-inline:5px" data-title="博客框架为Hexo" title=""><img src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&amp;logo=hexo" alt=""/></a><a class="github-badge" target="_blank" href="https://butterfly.js.org/" style="margin-inline:5px" data-title="主题版本Butterfly" title=""><img src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&amp;logo=bitdefender" alt=""/></a><a class="github-badge" target="_blank" href="https://github.com/" style="margin-inline:5px" data-title="本站项目由Github托管" title=""><img src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&amp;logo=GitHub" alt=""/></a><a class="github-badge" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" style="margin-inline:5px" data-title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可" title=""><img src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&amp;logo=Claris" alt=""/></a></p>';
+    var item_html = '<div id="workboard"></div><p id="ghbdages"><a class="github-badge" target="_blank" href="https://hexo.io/" style="margin-inline:5px" data-title="博客框架为Hexo" title=""><img src="J" alt=""/></a><a class="github-badge" target="_blank" href="https://butterfly.js.org/" style="margin-inline:5px" data-title="主题版本Butterfly" title=""><img src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&amp;logo=bitdefender" alt=""/></a><a class="github-badge" target="_blank" href="https://github.com/" style="margin-inline:5px" data-title="本站项目由Github托管" title=""><img src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&amp;logo=GitHub" alt=""/></a><a class="github-badge" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" style="margin-inline:5px" data-title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可" title=""><img src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&amp;logo=Claris" alt=""/></a></p>';
     console.log('已挂载butterfly_footer_beautify')
     parent_div_git.insertAdjacentHTML("beforeend",item_html)
     }
@@ -428,31 +425,7 @@ document.body.addEventListener('input', POWERMODE);
   else if (epage === cpage){
     butterfly_footer_beautify_injector_config();
   }
-  </script><script async src="/js/runtime.js"></script><script data-pjax>
-  function butterfly_swiper_injector_config(){
-    var parent_div_git = document.getElementById('recent-posts');
-    var item_html = '<div class="recent-post-item" style="height: auto;width: 100%"><div class="blog-slider swiper-container-fade swiper-container-horizontal" id="swiper_container"><div class="blog-slider__wrp swiper-wrapper" style="transition-duration: 0ms;"><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="Machine-Learning/ML_00_Introduction.html" alt=""><img width="48" height="48" src="https://teeyohuang.github.io/pic_bed/Machine_Learning/0_0.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2023-06-01</span><a class="blog-slider__title" href="Machine-Learning/ML_00_Introduction.html" alt="">机器学习系列</a><div class="blog-slider__text">机器学习系列文章简介</div><a class="blog-slider__button" href="Machine-Learning/ML_00_Introduction.html" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="Data-Structure/DS_00_introduction.html" alt=""><img width="48" height="48" src="https://teeyohuang.github.io/pic_bed/Data_Structure/Data_Structure_and_Algorithm_webp.webp" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2023-04-29</span><a class="blog-slider__title" href="Data-Structure/DS_00_introduction.html" alt="">数据结构与算法_Python</a><div class="blog-slider__text">数据结构与算法_Python 系列专栏简要说明</div><a class="blog-slider__button" href="Data-Structure/DS_00_introduction.html" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="Pandas-Base/PD_01_Introduction.html" alt=""><img width="48" height="48" src="https://teeyohuang.github.io/pic_bed/Pandas_Base/1_0.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2023-11-01</span><a class="blog-slider__title" href="Pandas-Base/PD_01_Introduction.html" alt="">1-Pandas教程简介</a><div class="blog-slider__text">Pandas基础入门系列文章简介</div><a class="blog-slider__button" href="Pandas-Base/PD_01_Introduction.html" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="Deep-Learning/DL_00_introduction.html" alt=""><img width="48" height="48" src="https://teeyohuang.github.io/pic_bed/Deep_Learning/DL.webp" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2023-05-01</span><a class="blog-slider__title" href="Deep-Learning/DL_00_introduction.html" alt="">深度学习导论</a><div class="blog-slider__text">深度学习 系列专栏简要说明</div><a class="blog-slider__button" href="Deep-Learning/DL_00_introduction.html" alt="">详情   </a></div></div></div><div class="blog-slider__pagination swiper-pagination-clickable swiper-pagination-bullets"></div></div></div>';
-    console.log('已挂载butterfly_swiper')
-    parent_div_git.insertAdjacentHTML("afterbegin",item_html)
-    }
-  var elist = 'undefined'.split(',');
-  var cpage = location.pathname;
-  var epage = 'all';
-  var flag = 0;
-
-  for (var i=0;i<elist.length;i++){
-    if (cpage.includes(elist[i])){
-      flag++;
-    }
-  }
-
-  if ((epage ==='all')&&(flag == 0)){
-    butterfly_swiper_injector_config();
-  }
-  else if (epage === cpage){
-    butterfly_swiper_injector_config();
-  }
-  </script><script defer src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.js"></script><script defer data-pjax src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper_init.js"></script><div class="js-pjax"><script async="async">var arr = document.getElementsByClassName('recent-post-item');
+  </script><script async src="/js/runtime.js"></script><div class="js-pjax"><script async="async">var arr = document.getElementsByClassName('recent-post-item');
 for(var i = 0;i<arr.length;i++){
     arr[i].classList.add('wow');
     arr[i].classList.add('animate__zoomIn');
@@ -476,4 +449,28 @@ for(var i = 0;i<arr.length;i++){
     arr[i].setAttribute('data-wow-delay', '');
     arr[i].setAttribute('data-wow-offset', '');
     arr[i].setAttribute('data-wow-iteration', '');
-  }</script></div><script defer src="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/wow.min.js"></script><script defer src="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/wow_init.js"></script><!-- hexo injector body_end end --></body></html>
+  }</script></div><script defer src="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/wow.min.js"></script><script defer src="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/wow_init.js"></script><script data-pjax>
+  function butterfly_swiper_injector_config(){
+    var parent_div_git = document.getElementById('recent-posts');
+    var item_html = '<div class="recent-post-item" style="height: auto;width: 100%"><div class="blog-slider swiper-container-fade swiper-container-horizontal" id="swiper_container"><div class="blog-slider__wrp swiper-wrapper" style="transition-duration: 0ms;"><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="Machine-Learning/ML_00_Introduction.html" alt=""><img width="48" height="48" src="https://teeyohuang.github.io/pic_bed/Machine_Learning/0_0.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2023-06-01</span><a class="blog-slider__title" href="Machine-Learning/ML_00_Introduction.html" alt="">机器学习系列</a><div class="blog-slider__text">机器学习系列文章简介</div><a class="blog-slider__button" href="Machine-Learning/ML_00_Introduction.html" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="Data-Structure/DS_00_introduction.html" alt=""><img width="48" height="48" src="https://teeyohuang.github.io/pic_bed/Data_Structure/Data_Structure_and_Algorithm_webp.webp" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2023-04-29</span><a class="blog-slider__title" href="Data-Structure/DS_00_introduction.html" alt="">数据结构与算法_Python</a><div class="blog-slider__text">数据结构与算法_Python 系列专栏简要说明</div><a class="blog-slider__button" href="Data-Structure/DS_00_introduction.html" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="Pandas-Base/PD_01_Introduction.html" alt=""><img width="48" height="48" src="https://teeyohuang.github.io/pic_bed/Pandas_Base/1_0.png" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2023-11-01</span><a class="blog-slider__title" href="Pandas-Base/PD_01_Introduction.html" alt="">1-Pandas教程简介</a><div class="blog-slider__text">Pandas基础入门系列文章简介</div><a class="blog-slider__button" href="Pandas-Base/PD_01_Introduction.html" alt="">详情   </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" href="Deep-Learning/DL_00_introduction.html" alt=""><img width="48" height="48" src="https://teeyohuang.github.io/pic_bed/Deep_Learning/DL.webp" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2023-05-01</span><a class="blog-slider__title" href="Deep-Learning/DL_00_introduction.html" alt="">深度学习导论</a><div class="blog-slider__text">深度学习 系列专栏简要说明</div><a class="blog-slider__button" href="Deep-Learning/DL_00_introduction.html" alt="">详情   </a></div></div></div><div class="blog-slider__pagination swiper-pagination-clickable swiper-pagination-bullets"></div></div></div>';
+    console.log('已挂载butterfly_swiper')
+    parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+    }
+  var elist = 'undefined'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_swiper_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_swiper_injector_config();
+  }
+  </script><script defer src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.js"></script><script defer data-pjax src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper_init.js"></script><!-- hexo injector body_end end --></body></html>
